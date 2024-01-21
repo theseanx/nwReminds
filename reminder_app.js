@@ -28,7 +28,7 @@ class reminderapp {
         let keepGoing = true;
         while (keepGoing) {
             let curDateTime = d.getTime();
-            // TODO: this.checkIfAnyEndpointsCalled();
+            //TODO: checkIfAnyEndpointsCalled(); receives info from frontend
             this.checkReminders(curDateTime);
             if (d.getMinutes() % 5 === 0) {
                 this.checkNotifications();
@@ -39,7 +39,7 @@ class reminderapp {
 
     checkNotifications() {
         if (this.nextNotifications >= 0) {
-            // TODO: notify the user
+            // TODO: notify the user - sends info to frontend
         }
     }
 
