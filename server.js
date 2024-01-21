@@ -16,6 +16,15 @@ const port = 3000;
 const uri = 'mongodb://127.0.0.1:27017'; // Replace with your MongoDB connection string
 const client = new MongoClient(uri);
 
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+  });
+  
+
 
 const publicVapidKey =
   "BJ8NBEgdl89k71YbzUGwKAYdbZF97XobHNUlNiX8xjDD5YEHkXxbv_JrC7pgkPAZkiFtdqy6EY7JKmn9NQJcitY";
@@ -26,6 +35,8 @@ webpush.setVapidDetails(
     publicVapidKey,
     privateVapidKey
   );
+
+  
 
   // Subscribe Route
 app.post("/subscribe", (req, res) => {
