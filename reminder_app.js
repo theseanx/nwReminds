@@ -19,7 +19,7 @@ class reminderapp {
         // Making nextNotifications into a field variable (rather than a local variable) allows the while loop to run multiple times, potentially adding different notifications into the nextNotifications list each loop
         // without losing data from the previous loop, this way notifications can be sent only every 5 minutes.
         this.nextNotifications =[];
-        runApp();
+        this.runApp();
     }
 
     runApp() {
