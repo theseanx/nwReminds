@@ -111,19 +111,68 @@ const getName = async (req, res) => {
 
 const addActivity = async (req, res) => {
     try {
-        // code here
+        const username = req.params.username;
+
+        const activityName = req.body.feelings;
+
+        const user = await collection.findOne({ username: username });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Add the new activity to the user's activities array
+        user.activities.push({
+            name: activityName,
+        });
+
+        // Save the updated user to the database
+        await user.save();
+
+        res.status(200).json({ message: 'Activity added successfully', user });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
 
+
 const editActivity = async (req, res) => {
     try {
-        // code here
+        const { username, activity } = req.params;
+        const { newActivityName, newActivityType, newInterval, newMlDrank, newBodyParts } = req.body;
+
+        // Assuming you have a database model named User
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Find the index of the activity in the user's activities array
+        const activityIndex = user.activities.findIndex(
+            (act) => act.activity === activity
+        );
+
+        if (activityIndex === -1) {
+            return res.status(404).json({ error: 'Activity not found for the user' });
+        }
+
+        // Update the activity details
+        user.activities[activityIndex].activity = newActivityName || user.activities[activityIndex].activity;
+        user.activities[activityIndex].interval = newInterval || user.activities[activityIndex].interval;
+
+        // Save the updated user to the database
+        await user.save();
+
+        res.status(200).json({ message: 'Activity edited successfully', user });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+
 
 const removeActivity = async (req, res) => {
     try {
