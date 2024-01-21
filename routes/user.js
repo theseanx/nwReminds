@@ -69,10 +69,50 @@ const addFeelings = async (req, res) => {
     }
 };
 
+const getFeelings = async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        const user = await collection.findOne({ username: username });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const userFeelings = user.feelings || [];
+
+        res.status(200).json({ username: user.username, feelings: userFeelings });
+    } catch (error) {
+        console.error('Error retrieving feelings:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+
+    
+};
+
+const getName = async (req, res) => {
+    try {
+        const username = req.params.username;
+
+        const user = await collection.findOne({ username: username });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        const userName = user.name || 'No Name'; // Assuming 'name' is a field in the user document
+
+        res.status(200).json({ username: user.username, name: userName });
+    } catch (error) {
+        console.error('Error retrieving user name:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
   
   module.exports = {
     createNewUser,
     updateUser,
     addFeelings,
-
+    getFeelings,
+    getName,
   }

@@ -3,6 +3,7 @@ const { MongoClient } = require('mongodb');
 
 const app = express();
 app.use(express.json());
+const link = "http://localhost:"
 const port = 3000;
 const uri = 'mongodb://127.0.0.1:27017'; // Replace with your MongoDB connection string
 const client = new MongoClient(uri);
@@ -28,7 +29,9 @@ app.get('/', async (req, res) => {
 app.post('/db/userlist', user.createNewUser);
 app.put('/db/userlist/:username', user.updateUser);
 
-app.post('/db/:username/feelings', user.addFeelings);
+app.post('/db/userlist/:username/feelings', user.addFeelings);
+app.get('/db/userlist/:username/name', user.getName);
+app.get('/db/userlist/:username/feelings', user.getFeelings);
 
 // Start the server after connecting to the database
 connectToDatabase().then(() => {
@@ -36,3 +39,21 @@ connectToDatabase().then(() => {
     console.log(`Server is running at http://localhost:${port}`);
   });
 });
+
+
+/*
+async function addFeelings(username, feelings) {
+    const address = link + port + "/db/userlist/" + username + "/feelings";
+
+    const response = await fetch(address, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "feelings": feelings
+        })
+    });
+
+}
+*/
