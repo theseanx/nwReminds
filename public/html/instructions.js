@@ -21,7 +21,7 @@ export async function createChat(keywords) {
             "messages": [
                 {
                     "role": "system",
-                    "content": "you represent a mindfulness assistant who recommends stretching exercises according to what problem areas they have. give a list of 5 maximum points."
+                    "content": "you represent a mindfulness assistant who recommends stretching exercises according to what problem areas they have. only generate a short paragraph."
                 },
                 {
                     "role": "user",
