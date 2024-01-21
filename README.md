@@ -1,4 +1,4 @@
-# PromptPal
+# NWReminds PromptPal
 
 The problem:
 Sedentary lifestyles in front of the computer have increased since the COVID-19 pandemic with work from home job positions or remote courses and lectures. As many people may have already experienced, sitting for long periods of time can give rise to various health concerns such as fatigue, discomfort, and back pain. At 8-11 hours of sitting per day, people are considered to be in HIGH group for heart diseases, type 2 diabetes and cancer. Furthermore, focusing on a specific task on the computer for long periods of time often diverts your attention from taking care of the small things such as drinking water, stretching or just taking a break, This invariably creates an imbalance in the work-life balance that is crucial in maintaining a healthy lifestyle. 
