@@ -52,7 +52,10 @@ class reminderapp {
 
     getElapsedTime(curDateTime, i) {
         // citation: https://www.tutorialspoint.com/finding-the-time-elapsed-in-javascript
-        if ((curDateTime - this.reminders[i].lastRemindedDateTime) >= this.reminders[i].interval) {
+        if (this.reminders[i].lastRemindedDateTime === null) {
+            this.addToNotifyList(i);
+            this.reminders[i].setLastRemindedDateTime(curDateTime);
+        } else if ((curDateTime - this.reminders[i].lastRemindedDateTime) >= this.reminders[i].interval) {
             this.addToNotifyList(i);
             this.reminders[i].setLastRemindedDateTime(curDateTime);
         }
