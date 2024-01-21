@@ -117,7 +117,7 @@ const addActivity = async (req, res) => {
 
         // Assuming you have a database model named User with an 'activities' field
         // where activities is an array of objects { name, type }
-        const user = await User.findOne({ username });
+        const user = await collection.findOne({ username });
         console.log("here0");
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -133,7 +133,7 @@ const addActivity = async (req, res) => {
         console.log("here2");
 
         // Save the updated user to the database
-        await user.save();
+        // await user.save();
 
         res.status(200).json({ message: 'Activity added successfully', user });
     } catch (error) {
@@ -142,6 +142,8 @@ const addActivity = async (req, res) => {
     }
 };
 
+// to start the server: node server.js
+
 
 const editActivity = async (req, res) => {
     try {
@@ -149,7 +151,7 @@ const editActivity = async (req, res) => {
         const { newActivityName, newActivityType, newInterval, newMlDrank, newBodyParts } = req.body;
 
         // Assuming you have a database model named User
-        const user = await User.findOne({ username });
+        const user = await collection.findOne({ username });
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
