@@ -11,9 +11,16 @@
         />
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
         <style>
-            
-            .body {
+             .body {
                 background-color: #ECF2FB;
+            }
+
+            #form2{
+                display: none;
+            }
+
+            #form1{
+                display: none;
             }
 
             .button {
@@ -38,15 +45,13 @@
             }
 
             .choices-div {
-                padding-top: 0px;
-            display: flex;
-            justify-content: space-between;
-            }
+      display: flex;
+    }
 
             .box1, .box2 {
-                width: 80%; /* Adjust the width as needed */
-                text-align: center;
-            
+            flex: 1; /* Equal width for both divs */
+            padding: 20px; /* Optional: Add padding for spacing */
+        
             }
     
 
@@ -113,61 +118,8 @@
                 background-color: #ECF2FB;
             }
 
-            #video-block {
-                background-color: #ECF2FB;
-                width: 100%;
-                height: 300px;
-                border-radius: 25px;
-                padding: 20px;
+          
 
-            }
-
-            #instruction-block {
-                background-color: #ECF2FB;
-                width: 100%;
-                height: 300px;
-                border-radius: 25px;
-
-            }
-            
-            .slidecontainer {
-            width: 100%;
-            }
-
-            .slider {
-            -webkit-appearance: none;
-            width: 90%;
-            height: 10px;
-            border-radius: 25px;
-            background: #ECF2FB;
-            outline: none;
-            opacity: 0.7;
-            -webkit-transition: .2s;
-            transition: opacity .2s;
-            text-align: center;
-            }
-
-            /* .slider:hover {
-            opacity: 1;
-            } */
-
-            .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #ACACAC;
-            cursor: pointer;
-            }
-
-            .slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            border-radius: 50%;
-            background: #ACACAC;
-            cursor: pointer;
-            }
             h1 {
                 font-weight: bold;
                 font-size: 1.25rem;
@@ -266,6 +218,63 @@
             span.reminder_name {
                 font-weight: bold;
             }
+
+
+            #video-block {
+                background-color: #ECF2FB;
+                width: 100%;
+                height: 250px;
+                border-radius: 25px;
+                padding: 20px;
+
+            }
+
+            #instruction-block {
+                background-color: #ECF2FB;
+                width: 100%;
+                height: 250px;
+                border-radius: 25px;
+
+            }
+            
+            .slidecontainer {
+            width: 100%;
+            }
+
+            .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 25px;
+            background: #ECF2FB;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            text-align: center;
+            }
+
+            /* .slider:hover {
+            opacity: 1;
+            } */
+
+            .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #ACACAC;
+            cursor: pointer;
+            }
+
+            .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #ACACAC;
+            cursor: pointer;
+            }
         </style>
     </head>
     <body
@@ -286,89 +295,276 @@
                 padding: 30px;
                 background-color: white;
                 border-radius: 20px;
-            ">
+            "
+            id="form0"
+        >
+            <h2>Create a reminder</h2>
+            <div class="form-group">
+                <label for="action_form__name">Reminder name</label>
+                <input
+                    type="text"
+                    placeholder="Enter name"
+                    class="form-control bg-light"
+                />
+            </div>
+            <div class="form-group">
+                <label for="action_form__interval">Choose an interval</label>
+                <input
+                    type="text"
+                    placeholder="HH:MM:SS"
+                    class="form-control bg-light"
+                />
+            </div>
+            <div class="form-group">
+                <legend style="font-size: 1rem">Choose a type</legend>
+                <div
+                    class="bg-light w-100"
+                    style="border-radius: 25px; padding: 15px"
+                >
+                    <div style="width: 30%; display: inline-block">
+                        <input
+                            name="action_form__type__selector"
+                            type="radio"
+                            id="action_form__type__water"
+                            style="visibility: hidden"
+                            checked="checked"
+                        />
+                        <label for="action_form__type__water">
+                            <p class="water"></p>
+                        </label>
+                    </div>
+                    <div style="width: 30%; display: inline-block">
+                        <input
+                            name="action_form__type__selector"
+                            type="radio"
+                            id="action_form__type__stretch"
+                            style="visibility: hidden"
+                        />
+                        <label for="action_form__type__stretch">
+                            <p class="stretch"></p>
+                        </label>
+                    </div>
+                    <div style="width: 30%; display: inline-block">
+                        <input
+                            name="action_form__type__selector"
+                            type="radio"
+                            id="action_form__type__rest"
+                            style="visibility: hidden"
+                        />
+                        <label for="action_form__type__rest">
+                            <p class="rest"></p>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input
+                    type="button"
+                    value="Set reminder!"
+                    class="form-control bg-light"
+                    id="reminderBtn"
+                />
+            </div>
+        </form>
+
+        <form
+        id="form2"
+        class="m-3"
+        style="
+            float: right;
+            width: 30%;
+            padding: 30px;
+            background-color: white;
+            border-radius: 20px;
+        ">
+
             <div>
                 <h2>Reminder: Stretch </h2> 
 
                 <hr style="border: 1px solid black;">
 
-                <h3>Do you feel any discomfort?</h3>
-                <div style="padding: 20px;">
-                    <form>
-                        <label class="checkbox">
-                            yes 
-                            <input type="checkbox" />
-                            <span class="checkmark"></span>
-                        </label>
-                        <label class="checkbox">
-                            no 
-                            <input type="checkbox" />
-                            <span class="checkmark"></span>
-                        </label>
-
-                    </form>
+                <h3>Here are some suggestions</h3>
+                <div id="video-block">
+               
 
                 </div>
-                <h3>Where do you feel discomfort?</h3>
+                <br>
+                <h3>Additional instructions</h3>
+                <div id="instruction-block">
+
+
+                </div>
 
                 <br>
+                <h3>
+                    On a scale of 1-10, how are you feeling?
+                </h3>
+                <br>
+                <div class="slider">
+        
+                    <div class="choices-div">
+                        <div class="box1">0 - Terrible  </div> 
+                        <div class="box2">10 - Great!</div>
+                    </div>
 
+                    <div class="slide-div">
+                        <input type="range" min="0" max="10" value="5" class="slider" id="myRange" oninput="sliderVal.innerText = this.value">
+                        <p id="sliderVal" style="text-align:right; padding-right:5px">5</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="form-group" style="padding-top: 100px;">
+                <input
+                    type="button"
+                    value="Finish"
+                    class="form-control bg-light"
+                    id="finishBtn"
+                    
+                />
+            </div>
+
+    </form>
+
+        <form
+        class="m-3"
+        id="form1"
+        style="
+            float: right;
+            width: 30%;
+            padding: 30px;
+            background-color: white;
+            border-radius: 20px;
+        ">
+        <div>
+            <h2>Reminder: Stretch </h2> 
+
+            <hr style="border: 1px solid black;">
+
+            <h3>Do you feel any discomfort?</h3>
+            <div style="padding: 20px;">
                 <form>
-                        <div class="choices-div"> 
-                            <div class="box1">
-                                <label class="checkbox">
-                                    neck 
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                </label>
+                    <label class="checkbox">
+                        yes 
+                        <input type="checkbox" />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox">
+                        no 
+                        <input type="checkbox" />
+                        <span class="checkmark"></span>
+                    </label>
 
-                                <label class="checkbox">
-                                    arm 
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                </label>
-                                
-                                <label class="checkbox">
-                                    leg 
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                </label>
-
-                            </div>
-
-                            <div class="box2">
-                                <label class="checkbox">
-                                    shoulder 
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                </label>
-
-                                
-                                <label class="checkbox">
-                                    hand 
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                </label>
-                                
-                                <label class="checkbox">
-                                    back 
-                                    <input type="checkbox" />
-                                    <span class="checkmark"></span>
-                                </label>
-                            </div>
-                            
-                            </div>
-                            <div class="bottomDiv" style="padding-top: 100px;">
-                                <div class="centerDiv">
-                                <button  class="nextButton" type="submit">Next</button>  
-                                </div>
-    
                 </form>
 
             </div>
-        </form>
+            <h3>Where do you feel discomfort?</h3>
+
+            <br>
+
+            <form>
+                    <div class="choices-div"> 
+                        <div class="box1">
+                            <label class="checkbox">
+                                neck 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+
+                            <label class="checkbox">
+                                arm 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+                            
+                            <label class="checkbox">
+                                leg 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+
+                        </div>
+
+                        <div class="box2">
+                            <label class="checkbox">
+                                shoulder 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+
+                            
+                            <label class="checkbox">
+                                hand 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+                            
+                            <label class="checkbox">
+                                back 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="button"
+                                value="Next"
+                                class="form-control bg-light"
+                                id="nextBtn"
+                            />
+                        </div>
+            </form>
+
+        </div>
+    </form>
+           
+                </div>
+        <div class="m-3" style="width: 65%">
+            <h2>Welcome back &lt;Username&gt;!</h2>
+            <h3>User statistics</h3>
+            <div>
+                <div class="chart_container" style="float: left">
+                    <h4>Average happiness score</h4>
+                    <canvas
+                        id="average-happiness-score"
+                        style="width: 75%"
+                    ></canvas>
+                </div>
+                <div class="chart_container" style="float: right">
+                    <h4>Monthly happiness score</h4>
+                    <canvas
+                        id="monthly-happiness-score"
+                        style="width: 75%"
+                    ></canvas>
+                </div>
+            </div>
+            <h3 style="font-size: 1.25rem">Upcoming Reminders</h3>
+            <div id="reminders_wrapper"></div>
+        </div>
 
         <script>
+            const nextBtn = document.getElementById("nextBtn")
+            nextBtn.addEventListener("click", () => {
+                document.getElementById("form1").style.display = "none"
+                document.getElementById("form2").style.display = "block"
+            })
+
+            const finishBtn = document.getElementById("finishBtn")
+            finishBtn.addEventListener("click", () => {
+                document.getElementById("form2").style.display = "none"
+                document.getElementById("form0").style.display = "block"
+            })
+
+            const reminderBtn = document.getElementById("reminderBtn")
+            reminderBtn.addEventListener("click", () => {
+                document.getElementById("form0").style.display = "none"
+                document.getElementById("form1").style.display = "block"
+            })
+            
+
             const $ = document.querySelector.bind(document);
             function HTMLtoNode(html) {
                 const template = document.createElement("template");
