@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Main page - PromptPal</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <style>
+             .body {
+                background-color: #ECF2FB;
+            }
+
+            #form2{
+                display: none;
+            }
+
+            #form1{
+                display: none;
+            }
+
+            .button {
+                border:none;
+                color: black;
+                padding: 15px 32px;
+                text-align:center;
+                text-decoration: none;
+                display:inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+
+            .bottomDiv {
+                align-items: flex-end;
+
+            }
+
+            .centerDiv {
+                text-align: center;
+            }
+
+            .choices-div {
+      display: flex;
+    }
+
+            .box1, .box2 {
+            flex: 1; /* Equal width for both divs */
+            padding: 20px; /* Optional: Add padding for spacing */
+        
+            }
+    
+
+            .nextButton {
+                background-color: #ECF2FB;
+                width: 200px;
+                height:50px;
+                text-align: center;
+                border-radius: 25px;
+
+            }
+
+            div.form-group {
+                margin: 30px 0;
+            }
+
+            #stretchBox {
+                height: 1000px;
+                width: 30%;
+                background-color: white;
+                /* border: 2px solid #333; Specify border width and color */
+                padding: 2%;
+                border-radius: 25px;
+
+            }
+
+
+            .checkbox input {
+                height:0;
+                width:0;
+            }
+
+            .checkbox {
+                display: block;
+                position: relative;
+                padding-left: 26px;
+                margin-bottom: 18px;
+                font-size:22px;
+                user-select:none;
+
+
+            }
+
+            .checkmark {
+                position: absolute;
+                top:0;
+                left:0;
+                height: 20px;
+                width: 20px;
+                border: 2px solid black;
+                background-color: white;
+                margin-top: 8px;
+            }
+
+            /* .checkbox .checkmark:after {
+                top: -5px;
+                width: 5px;
+                height: 10px;
+                left: 2px;
+                color: #ECF2FB;
+            } */
+
+            .checkbox input:checked ~ .checkmark{
+                background-color: #ECF2FB;
+            }
+
+          
+
+            h1 {
+                font-weight: bold;
+                font-size: 1.25rem;
+                margin: 0;
+            }
+            h2 {
+                font-size: 1.25rem;
+                font-weight: bold;
+            }
+            h3 {
+                font-size: 1.25rem;
+            }
+            h4 {
+                font-size: 1rem;
+                font-weight: bold;
+                text-align: center;
+            }
+            div.form-group {
+                margin: 30px 0;
+            }
+            input[type="radio"]:checked + label {
+                outline: 1px solid black;
+            }
+            .water {
+                margin: auto;
+                padding: 15px;
+                width: 75px;
+                height: 75px;
+                background-color: #8fb9f7;
+                border-radius: 10px;
+                background-image: url("/public/img/water.png");
+                background-repeat: no-repeat;
+                background-size: 75% 75%;
+                background-position: center center;
+            }
+            .stretch {
+                margin: auto;
+                padding: 15px;
+                width: 75px;
+                height: 75px;
+                background-color: #f79c8f;
+                border-radius: 10px;
+                background-image: url("/public/img/exercise.png");
+                background-repeat: no-repeat;
+                background-size: 75% 75%;
+                background-position: center center;
+            }
+            .rest {
+                margin: auto;
+                padding: 15px;
+                width: 75px;
+                height: 75px;
+                background-color: #f7da8f;
+                border-radius: 10px;
+                background-image: url("/public/img/mug-hot-alt.png");
+                background-repeat: no-repeat;
+                background-size: 75% 75%;
+                background-position: center center;
+            }
+            .ellipses {
+                margin: auto;
+                padding: 15px;
+                width: 75px;
+                height: 75px;
+                background-image: url("/public/img/three_ellipses.png");
+                background-repeat: no-repeat;
+                background-size: 75%;
+                background-position: center center;
+            }
+            div.chart_container {
+                width: 47.5%;
+                background-color: white;
+                display: inline-block;
+                border-radius: 25px;
+                margin: 10px 5px;
+                padding: 25px 0;
+            }
+            div.reminder {
+                height: 125px;
+                border-radius: 25px;
+                overflow: hidden;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                padding: 0 30px;
+                background-color: white;
+                margin-bottom: 10px;
+            }
+            div.reminder_column {
+                display: inline-block;
+                margin: 0;
+                padding: 0;
+                width: 25%;
+                text-align: center;
+            }
+            span.reminder_name {
+                font-weight: bold;
+            }
+
+
+            #video-block {
+                background-color: #ECF2FB;
+                width: 100%;
+                height: 250px;
+                border-radius: 25px;
+                padding: 20px;
+
+            }
+
+            #instruction-block {
+                background-color: #ECF2FB;
+                width: 100%;
+                height: 250px;
+                border-radius: 25px;
+
+            }
+            
+            .slidecontainer {
+            width: 100%;
+            }
+
+            .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 25px;
+            background: #ECF2FB;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+            text-align: center;
+            }
+
+            /* .slider:hover {
+            opacity: 1;
+            } */
+
+            .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #ACACAC;
+            cursor: pointer;
+            }
+
+            .slider::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: #ACACAC;
+            cursor: pointer;
+            }
+        </style>
+    </head>
+    <body
+        class="bg-light"
+        style="
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        "
+    >
+        <header class="bg-white border-bottom border-dark p-3">
+            <h1>PromptPal</h1>
+        </header>
+        <form
+            class="m-3"
+            style="
+                float: right;
+                width: 30%;
+                padding: 30px;
+                background-color: white;
+                border-radius: 20px;
+            "
+            id="form0"
+        >
+            <h2>Create a reminder</h2>
+            <div class="form-group">
+                <label for="action_form__name">Reminder name</label>
+                <input
+                    type="text"
+                    placeholder="Enter name"
+                    class="form-control bg-light"
+                />
+            </div>
+            <div class="form-group">
+                <label for="action_form__interval">Choose an interval</label>
+                <input
+                    type="text"
+                    placeholder="HH:MM:SS"
+                    class="form-control bg-light"
+                />
+            </div>
+            <div class="form-group">
+                <legend style="font-size: 1rem">Choose a type</legend>
+                <div
+                    class="bg-light w-100"
+                    style="border-radius: 25px; padding: 15px"
+                >
+                    <div style="width: 30%; display: inline-block">
+                        <input
+                            name="action_form__type__selector"
+                            type="radio"
+                            id="action_form__type__water"
+                            style="visibility: hidden"
+                            checked="checked"
+                        />
+                        <label for="action_form__type__water">
+                            <p class="water"></p>
+                        </label>
+                    </div>
+                    <div style="width: 30%; display: inline-block">
+                        <input
+                            name="action_form__type__selector"
+                            type="radio"
+                            id="action_form__type__stretch"
+                            style="visibility: hidden"
+                        />
+                        <label for="action_form__type__stretch">
+                            <p class="stretch"></p>
+                        </label>
+                    </div>
+                    <div style="width: 30%; display: inline-block">
+                        <input
+                            name="action_form__type__selector"
+                            type="radio"
+                            id="action_form__type__rest"
+                            style="visibility: hidden"
+                        />
+                        <label for="action_form__type__rest">
+                            <p class="rest"></p>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input
+                    type="button"
+                    value="Set reminder!"
+                    class="form-control bg-light"
+                    id="reminderBtn"
+                />
+            </div>
+        </form>
+
+        <form
+        id="form2"
+        class="m-3"
+        style="
+            float: right;
+            width: 30%;
+            padding: 30px;
+            background-color: white;
+            border-radius: 20px;
+        ">
+
+            <div>
+                <h2>Reminder: Stretch </h2> 
+
+                <hr style="border: 1px solid black;">
+
+                <h3>Here are some suggestions</h3>
+                <div id="video-block">
+               
+
+                </div>
+                <br>
+                <h3>Additional instructions</h3>
+                <div id="instruction-block">
+
+
+                </div>
+
+                <br>
+                <h3>
+                    On a scale of 1-10, how are you feeling?
+                </h3>
+                <br>
+                <div class="slider">
+        
+                    <div class="choices-div">
+                        <div class="box1">0 - Terrible  </div> 
+                        <div class="box2">10 - Great!</div>
+                    </div>
+
+                    <div class="slide-div">
+                        <input type="range" min="0" max="10" value="5" class="slider" id="myRange" oninput="sliderVal.innerText = this.value">
+                        <p id="sliderVal" style="text-align:right; padding-right:5px">5</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="form-group" style="padding-top: 100px;">
+                <input
+                    type="button"
+                    value="Finish"
+                    class="form-control bg-light"
+                    id="finishBtn"
+                    
+                />
+            </div>
+
+    </form>
+
+        <form
+        class="m-3"
+        id="form1"
+        style="
+            float: right;
+            width: 30%;
+            padding: 30px;
+            background-color: white;
+            border-radius: 20px;
+        ">
+        <div>
+            <h2>Reminder: Stretch </h2> 
+
+            <hr style="border: 1px solid black;">
+
+            <h3>Do you feel any discomfort?</h3>
+            <div style="padding: 20px;">
+                <form>
+                    <label class="checkbox">
+                        yes 
+                        <input type="checkbox" />
+                        <span class="checkmark"></span>
+                    </label>
+                    <label class="checkbox">
+                        no 
+                        <input type="checkbox" />
+                        <span class="checkmark"></span>
+                    </label>
+
+                </form>
+
+            </div>
+            <h3>Where do you feel discomfort?</h3>
+
+            <br>
+
+            <form>
+                    <div class="choices-div"> 
+                        <div class="box1">
+                            <label class="checkbox">
+                                neck 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+
+                            <label class="checkbox">
+                                arm 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+                            
+                            <label class="checkbox">
+                                leg 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+
+                        </div>
+
+                        <div class="box2">
+                            <label class="checkbox">
+                                shoulder 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+
+                            
+                            <label class="checkbox">
+                                hand 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+                            
+                            <label class="checkbox">
+                                back 
+                                <input type="checkbox" />
+                                <span class="checkmark"></span>
+                            </label>
+                        </div>
+                        
+                        </div>
+                        <div class="form-group">
+                            <input
+                                type="button"
+                                value="Next"
+                                class="form-control bg-light"
+                                id="nextBtn"
+                            />
+                        </div>
+            </form>
+
+        </div>
+    </form>
+           
+                </div>
+        <div class="m-3" style="width: 65%">
+            <h2>Welcome back &lt;Username&gt;!</h2>
+            <h3>User statistics</h3>
+            <div>
+                <div class="chart_container" style="float: left">
+                    <h4>Average happiness score</h4>
+                    <canvas
+                        id="average-happiness-score"
+                        style="width: 75%"
+                    ></canvas>
+                </div>
+                <div class="chart_container" style="float: right">
+                    <h4>Monthly happiness score</h4>
+                    <canvas
+                        id="monthly-happiness-score"
+                        style="width: 75%"
+                    ></canvas>
+                </div>
+            </div>
+            <h3 style="font-size: 1.25rem">Upcoming Reminders</h3>
+            <div id="reminders_wrapper"></div>
+        </div>
+
+        <script>
+            const nextBtn = document.getElementById("nextBtn")
+            nextBtn.addEventListener("click", () => {
+                document.getElementById("form1").style.display = "none"
+                document.getElementById("form2").style.display = "block"
+            })
+
+            const finishBtn = document.getElementById("finishBtn")
+            finishBtn.addEventListener("click", () => {
+                document.getElementById("form2").style.display = "none"
+                document.getElementById("form0").style.display = "block"
+            })
+
+            const reminderBtn = document.getElementById("reminderBtn")
+            reminderBtn.addEventListener("click", () => {
+                document.getElementById("form0").style.display = "none"
+                document.getElementById("form1").style.display = "block"
+            })
+            
+
+            const $ = document.querySelector.bind(document);
+            function HTMLtoNode(html) {
+                const template = document.createElement("template");
+                template.innerHTML = html;
+                return template.content.children[0];
+            }
+            function addTask(node, name, time, type) {
+    // Convert the time string to a Date object
+    const endTime = new Date(time);
+
+    // Create a unique ID for the countdown element
+    const countdownId = 'countdown-' + Math.random().toString(36).substr(2, 9);
+
+    // Add the task HTML with the countdown element
+    node.appendChild(HTMLtoNode(`
+        <div class="reminder">
+            <div class="reminder_column">
+                <div class="${type}"></div>
+            </div>
+            <div class="reminder_column">
+                <span class="reminder_name">${name}</span>
+            </div>
+            <div class="reminder_column">
+                <p id="${countdownId}"></p>
+            </div>
+            <div class="reminder_column">
+                <div class="ellipses"></div>
+            </div>
+        </div>
+    `));
+
+    
+
+    // Function to update the countdown
+    function updateCountdown() {
+        const now = new Date();
+        const difference = endTime - now;
+
+        if (difference > 0) {
+            const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((difference / 1000 / 60) % 60);
+            const seconds = Math.floor((difference / 1000) % 60);
+
+            document.getElementById(countdownId).innerText = `${hours}h ${minutes}m ${seconds}s`;
+        } else {
+            clearInterval(intervalId);
+            document.getElementById(countdownId).innerText = "Time's up!";
+        }
+    }
+
+    // Update the countdown every second
+    const intervalId = setInterval(updateCountdown, 1000);
+
+    // Call updateCountdown immediately to initialize
+    updateCountdown();
+}
+            addTask(
+                $("#reminders_wrapper"),
+                "Drink water",
+                "2024-01-22T15:00:00",
+                "water"
+            );
+            new Chart("average-happiness-score", {
+                type: "pie",
+                data: {
+                    labels: ["Happiness score", "Unhappiness score"],
+                    datasets: [
+                        {
+                            data: [70, 30],
+                            backgroundColor: ["lightblue"],
+                        },
+                    ],
+                },
+                options: { legend: { display: false } },
+            });
+            new Chart("monthly-happiness-score", {
+                type: "line",
+                data: {
+                    labels: ["December", "January", "February"],
+                    datasets: [
+                        {
+                            data: [66, 68, 67],
+                            backgroundColor: ["lightblue"],
+                            fill: false,
+                        },
+                    ],
+                },
+                options: { legend: { display: false } },
+            });
+        </script>
+    </body>
+</html>
