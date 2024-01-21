@@ -109,13 +109,15 @@ const getName = async (req, res) => {
     }
 };
 
+
 const addActivity = async (req, res) => {
     try {
-        const username = req.params.username;
+        const { username } = req.params;
+        const { activityName, activityType } = req.body;
 
-        const activityName = req.body.feelings;
-
-        const user = await collection.findOne({ username: username });
+        // Assuming you have a database model named User with an 'activities' field
+        // where activities is an array of objects { name, type }
+        const user = await User.findOne({ username });
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -124,6 +126,7 @@ const addActivity = async (req, res) => {
         // Add the new activity to the user's activities array
         user.activities.push({
             name: activityName,
+            type: activityType,
         });
 
         // Save the updated user to the database
@@ -176,11 +179,37 @@ const editActivity = async (req, res) => {
 
 const removeActivity = async (req, res) => {
     try {
-        // code here
+        const { username, activity } = req.params;
+
+        // Assuming you have a database model named User
+        const user = await User.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Find the index of the activity in the user's activities array
+        const activityIndex = user.activities.findIndex(
+            (act) => act.activity === activity
+        );
+
+        if (activityIndex === -1) {
+            return res.status(404).json({ error: 'Activity not found for the user' });
+        }
+
+        // Remove the activity from the user's activities array
+        user.activities.splice(activityIndex, 1);
+
+        // Save the updated user to the database
+        await user.save();
+
+        res.status(200).json({ message: 'Activity removed successfully', user });
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
   
   module.exports = {
     createNewUser,
