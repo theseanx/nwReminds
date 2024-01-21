@@ -1,4 +1,3 @@
-const client = require('client.js');
 // update as needed
 const startingHours = 0;
 const startingMinutes = 0;
@@ -37,7 +36,7 @@ function updateCountdown() {
         console.log("Countdown reached zero! Perform some action.");
 
         if ("serviceWorker" in navigator) {
-            client.send().catch(err => console.error(err));
+            send().catch(err => console.error(err));
           }
 
 
