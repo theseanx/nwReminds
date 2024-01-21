@@ -64,7 +64,7 @@ async function connectToDatabase() {
 
 
 app.get('/', async (req, res) => {
-    res.send('Hello, this is your website!');
+    res.sendFile(path.join(__dirname, 'index.html'));
   });
   
   // Start the server after connecting to the database
