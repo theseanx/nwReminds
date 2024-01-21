@@ -542,7 +542,7 @@
                 template.innerHTML = html;
                 return template.content.children[0];
             }
-            function addTask(node, name, startingSeconds, type) {
+            function addTask(node, name, addSeconds, type) {
                 const publicVapidKey =
                     "BJ8NBEgdl89k71YbzUGwKAYdbZF97XobHNUlNiX8xjDD5YEHkXxbv_JrC7pgkPAZkiFtdqy6EY7JKmn9NQJcitY";
                 const privateVapidKey =
@@ -552,6 +552,7 @@
 
                 const startingHours = 0;
                 const startingMinutes = 0;
+                const startingSeconds = parseInt(addSeconds);
 
                 now.setHours(now.getHours() + startingHours);
                 now.setMinutes(now.getMinutes() + startingMinutes);
@@ -677,6 +678,7 @@
                         //document.getElementById(countdownId).innerText = "Time's up!";
 
                         // Perform action when countdown reaches zero
+                        afterInterrupt();
                         alert("Countdown reached zero! Perform some action.");
 
                         if ("serviceWorker" in navigator) {
