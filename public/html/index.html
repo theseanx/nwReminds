@@ -300,11 +300,13 @@
                 />
             </div>
             <div class="form-group">
-                <label for="action_form__interval">Choose an interval</label>
+                <label for="action_form__interval"
+                    >Choose an interval (seconds):</label
+                >
                 <input
                     id="interval"
-                    type="text"
-                    placeholder="HH:MM:SS"
+                    type="number"
+                    placeholder="Seconds"
                     class="form-control bg-light"
                 />
             </div>
@@ -540,41 +542,176 @@
                 template.innerHTML = html;
                 return template.content.children[0];
             }
-            function addTask(node, name, time, type) {
+            function addTask(node, name, startingSeconds, type) {
+                const publicVapidKey =
+                    "BJ8NBEgdl89k71YbzUGwKAYdbZF97XobHNUlNiX8xjDD5YEHkXxbv_JrC7pgkPAZkiFtdqy6EY7JKmn9NQJcitY";
+                const privateVapidKey =
+                    "3AysE1150GFoHijLeC3mmJGftO0cZGROeSiTalMiSpE";
+
+                var now = new Date();
+
+                const startingHours = 0;
+                const startingMinutes = 0;
+
+                now.setHours(now.getHours() + startingHours);
+                now.setMinutes(now.getMinutes() + startingMinutes);
+                now.setSeconds(now.getSeconds() + startingSeconds);
+
+                let time = now.toString();
+
+                const endTime = new Date(time);
+
+                // Create a unique ID for the countdown element
+                const countdownId =
+                    "countdown-" + Math.random().toString(36).substr(2, 9);
+
+                async function getActivities() {
+                    console.log("Sending Push...");
+                    await fetch("http://localhost:3000/db/userlist/", {
+                        method: "POST",
+                        body: JSON.stringify(),
+                        headers: {
+                            "content-type": "application/json",
+                        },
+                    });
+                }
+
+                // Add the task HTML with the countdown element
+                console.log(type);
                 node.appendChild(
-                    HTMLtoNode(`<div class="reminder" id="reminder${reminderId}">
-                    <div class="reminder_column">
-                       <div class="${type}"></div>
-                    </div>
-                    <div class="reminder_column">
-                        <span class="reminder_name">${name}</span>
-                    </div>
-                    <div class="reminder_column">
-                        <span>${time}</span>
-                    </div>
-                    <div class="reminder_column">
-                        <div class="ellipses" onclick="deleteTask('reminder${reminderId}');"></div>
-                    </div>
-                </div>`)
+                    HTMLtoNode(`
+<div class="reminder" id="reminder${reminderId}">
+<div class="reminder_column">
+<div class="${type}"></div>
+</div>
+<div class="reminder_column">
+<span class="reminder_name">${name}</span>
+</div>
+<div class="reminder_column">
+<p id="${countdownId}"></p>
+<script type="module">
+</div>
+<div class="reminder_column">
+<div class="reminder_column">
+<div class="ellipses" onclick="deleteTask('reminder${reminderId}');"></div>
+</div>
+</div>
+</div>
+`)
                 );
-                reminderId++; 
+
+                // Check for service worker
+                if ("serviceWorker" in navigator) {
+                    send().catch((err) => console.error(err));
+                }
+
+                // Register SW, Register Push, Send Push
+                async function send() {
+                    // Register Service Worker
+                    console.log("Registering service worker...");
+                    const register = await navigator.serviceWorker.register(
+                        "/worker.js",
+                        {
+                            scope: "/",
+                        }
+                    );
+                    console.log("Service Worker Registered...");
+
+                    // Register Push
+                    console.log("Registering Push...");
+                    const subscription = await register.pushManager.subscribe({
+                        userVisibleOnly: true,
+                        applicationServerKey:
+                            urlBase64ToUint8Array(publicVapidKey),
+                    });
+                    console.log("Push Registered...");
+
+                    // Send Push Notification
+                    console.log("Sending Push...");
+                    await fetch("http://localhost:3000/subscribe", {
+                        method: "POST",
+                        body: JSON.stringify(subscription),
+                        headers: {
+                            "content-type": "application/json",
+                        },
+                    });
+                    console.log("Push Sent...");
+                }
+
+                function urlBase64ToUint8Array(base64String) {
+                    const padding = "=".repeat(
+                        (4 - (base64String.length % 4)) % 4
+                    );
+                    const base64 = (base64String + padding)
+                        .replace(/\-/g, "+")
+                        .replace(/_/g, "/");
+
+                    const rawData = window.atob(base64);
+                    const outputArray = new Uint8Array(rawData.length);
+
+                    for (let i = 0; i < rawData.length; ++i) {
+                        outputArray[i] = rawData.charCodeAt(i);
+                    }
+                    return outputArray;
+                }
+
+                // Function to update the countdown
+                function updateCountdown() {
+                    const now = new Date();
+                    const difference = endTime - now;
+
+                    if (difference > 0) {
+                        const hours = Math.floor(
+                            (difference / (1000 * 60 * 60)) % 24
+                        );
+                        const minutes = Math.floor(
+                            (difference / 1000 / 60) % 60
+                        );
+                        const seconds = Math.floor((difference / 1000) % 60);
+
+                        document.getElementById(
+                            countdownId
+                        ).innerText = `${hours}h ${minutes}m ${seconds}s`;
+                    } else {
+                        //clearInterval(intervalId);
+                        //document.getElementById(countdownId).innerText = "Time's up!";
+
+                        // Perform action when countdown reaches zero
+                        alert("Countdown reached zero! Perform some action.");
+
+                        if ("serviceWorker" in navigator) {
+                            send().catch((err) => console.error(err));
+                        }
+
+                        // You can add your specific action here, such as displaying a message, triggering an event, etc.
+
+                        // For example, stopping the countdown and displaying a message:
+                        // clearInterval(countdownInterval);
+                        // countdownEl.innerHTML = 'Countdown reached zero!';
+
+                        // retrieve the next interval
+                        //time = startingHours * 60 * 60 + startingMinutes * 60 + startingSeconds + 1;
+                        endTime.setHours(now.getHours() + startingHours);
+                        endTime.setMinutes(now.getMinutes() + startingMinutes);
+                        endTime.setSeconds(
+                            now.getSeconds() + startingSeconds + 2
+                        );
+                    }
+                }
+
+                // Update the countdown every second
+                const intervalId = setInterval(updateCountdown, 1000);
+
+                // Call updateCountdown immediately to initialize
+                updateCountdown();
+                reminderId++;
             }
-
-
-
-
-            
 
             function deleteTask(nodeId) {
                 const element = document.getElementById(nodeId);
                 element.parentNode.removeChild(element);
             }
-            addTask(
-                $("#reminders_wrapper"),
-                "Drink water",
-                "00:15:20",
-                "water"
-            );
+            addTask($("#reminders_wrapper"), "Drink water", 20, "water");
             new Chart("average-happiness-score", {
                 type: "pie",
                 data: {
@@ -647,5 +784,3 @@
         </script>
     </body>
 </html>
-
-
