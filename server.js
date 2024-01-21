@@ -33,8 +33,17 @@ app.post('/db/userlist/:username/feelings', user.addFeelings);
 app.get('/db/userlist/:username/name', user.getName);
 app.get('/db/userlist/:username/feelings', user.getFeelings);
 
+// working
 app.post('/db/userlist/:username/activity', user.addActivity);
+
+// editActivity:
+// issue: some activities have multiple words, but the endpoint URL only accepts one continous word for the activity
+// OK: ".../exampleUser/activity"
+// NOT OK: ".../exampleUser/multiple word activity"
+// this is working for single word activities only
 app.put('/db/userlist/:username/:activity', user.editActivity);
+
+
 app.delete('/db/userlist/:username/:activity', user.removeActivity);
 
 // Start the server after connecting to the database

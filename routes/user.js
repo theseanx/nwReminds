@@ -148,7 +148,7 @@ const addActivity = async (req, res) => {
 const editActivity = async (req, res) => {
     try {
         const { username, activity } = req.params;
-        const { newActivityName, newActivityType, newInterval, newMlDrank, newBodyParts } = req.body;
+        const { newActivityName, newInterval} = req.body;
 
         // Assuming you have a database model named User
         const user = await collection.findOne({ username });
@@ -171,7 +171,7 @@ const editActivity = async (req, res) => {
         user.activities[activityIndex].interval = newInterval || user.activities[activityIndex].interval;
 
         // Save the updated user to the database
-        await user.save();
+        // await user.save();
 
         res.status(200).json({ message: 'Activity edited successfully', user });
     } catch (error) {
@@ -187,7 +187,7 @@ const removeActivity = async (req, res) => {
         const { username, activity } = req.params;
 
         // Assuming you have a database model named User
-        const user = await User.findOne({ username });
+        const user = await collection.findOne({ username });
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
@@ -206,7 +206,7 @@ const removeActivity = async (req, res) => {
         user.activities.splice(activityIndex, 1);
 
         // Save the updated user to the database
-        await user.save();
+        // await user.save();
 
         res.status(200).json({ message: 'Activity removed successfully', user });
     } catch (error) {
