@@ -33,7 +33,9 @@ app.post('/db/userlist/:username/feelings', user.addFeelings);
 app.get('/db/userlist/:username/name', user.getName);
 app.get('/db/userlist/:username/feelings', user.getFeelings);
 
-
+app.post('/db/userlist/:username/activity', user.addActivity);
+app.post('/db/userlist/:username/:activity', user.editActivity);
+app.post('/db/userlist/:username/:activity', user.removeActivity);
 
 // Start the server after connecting to the database
 connectToDatabase().then(() => {

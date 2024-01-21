@@ -108,6 +108,30 @@ const getName = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
+const addActivity = async (req, res) => {
+    try {
+        // code here
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const editActivity = async (req, res) => {
+    try {
+        // code here
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
+const removeActivity = async (req, res) => {
+    try {
+        // code here
+    } catch (error) {
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
   
   module.exports = {
     createNewUser,
@@ -115,4 +139,7 @@ const getName = async (req, res) => {
     addFeelings,
     getFeelings,
     getName,
+    addActivity,
+    editActivity,
+    removeActivity,
   }

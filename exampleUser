@@ -1,0 +1,58 @@
+{
+  "_id": {
+    "$oid": "65ac60615b7071b73cee92c4"
+  },
+  "username": "exampleUser",
+  "name": "Example",
+  "password": "123",
+  "email": "example@gmail.com",
+  "feelings": [
+    {
+      "timestamp": {
+        "$date": "2024-01-21T00:27:06.141Z"
+      },
+      "value": 1
+    },
+    {
+      "timestamp": {
+        "$date": "2024-01-21T00:27:14.178Z"
+      },
+      "value": 3
+    },
+    {
+      "timestamp": {
+        "$date": "2024-01-21T00:27:48.306Z"
+      },
+      "value": 7
+    },
+    {
+      "timestamp": {
+        "$date": "2024-01-21T00:28:47.832Z"
+      },
+      "value": 5
+    }
+  ],
+  "activities": [
+    {
+      "activity": "drink water",
+      "interval": "00:30:00",
+      "mL_drank": 100
+    },
+    {
+      "activity": "stretch",
+      "interval": "01:00:00",
+      "body_parts": {
+        "neck": 10,
+        "arms": 3,
+        "legs": 0,
+        "shoulders": 1,
+        "hands": 5,
+        "back": 2
+      }
+    },
+    {
+      "activity": "take a break",
+      "interval": "00:45:00"
+    }
+  ]
+}
