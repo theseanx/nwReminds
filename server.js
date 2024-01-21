@@ -26,6 +26,9 @@ app.get('/', async (req, res) => {
 });
 
 app.post('/db/userlist', user.createNewUser);
+app.put('/db/userlist/:username', user.updateUser);
+
+app.post('/db/:username/feelings', user.addFeelings);
 
 // Start the server after connecting to the database
 connectToDatabase().then(() => {
