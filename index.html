@@ -91,53 +91,32 @@
                 </form>
             </div>
         </div>
-        <navbar
-            class="bg-primary h-100 px-3 me-3 text-white"
-            style="min-height: 100vh; float: left"
-        >
-            <h1 class="my-3">PromptPal</h1>
-        </navbar>
-        <div>
-            <button id="create_reminder_button" class="btn btn-primary my-3">
-                Create reminder
-            </button>
+        <header class="bg-white border-bottom border-dark p-3">
+            <h1 class="m-0" style="font-weight: bold; font-size: 1.25rem">
+                PromptPal
+            </h1>
+        </header>
+        <h2>Welcome back &gt;Username&lt;!</h2>
+        <h3>User statistics</h3>
+        <!-- Average happiness score pie chart -->
+        <!-- Monthly happiness score -->
+        <h3>Upcoming Reminders</h3>
+        <div id="reminders_wrapper">
+            <div>
+                <div><!-- <img /> --></div>
+                <span>Drink water</span>
+                <div>00:15:20</div>
+                <div><!-- actions --></div>
+            </div>
+            <div>
+                <div><!-- <img /> --></div>
+                <div>Grab a snack</div>
+                <div>01:00:02</div>
+                <div><!-- actions --></div>
+            </div>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Reminders</th>
-                    <th>Time remaining</th>
-                    <th>Icon</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Drink water</td>
-                    <td>00:15:20</td>
-                    <td><!-- <img /> --></td>
-                </tr>
-                <tr>
-                    <td>Grab a snack</td>
-                    <td>01:00:02</td>
-                    <td><!-- <img /> --></td>
-                </tr>
-            </tbody>
-        </table>
         <script>
             const $ = document.querySelector.bind(document);
-            const modal = $("#modal_form");
-            function openModal() {
-                modal.style.display = "block";
-            }
-            function closeModal() {
-                modal.style.display = "none";
-            }
-            $("#create_reminder_button").addEventListener("click", openModal);
-            $("#modal_form__submit").addEventListener("click", (e) => {
-                e.preventDefault();
-                closeModal();
-            });
-            $("#modal_form__reset").addEventListener("click", closeModal);
         </script>
     </body>
 </html>
