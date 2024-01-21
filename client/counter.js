@@ -4,6 +4,8 @@ const startingMinutes = 0;
 const startingSeconds = 5;
 let time = startingHours * 60 * 60 + startingMinutes * 60 + startingSeconds;
 
+
+
 const countdownEl = document.getElementById('countdown');
 
 const countdownInterval = setInterval(updateCountdown, 1000);

@@ -572,27 +572,59 @@
                 return template.content.children[0];
             }
             function addTask(node, name, time, type) {
-                node.appendChild(
-                    HTMLtoNode(`<div class="reminder">
-                    <div class="reminder_column">
-                        <div class="${type}"></div>
-                    </div>
-                    <div class="reminder_column">
-                        <span class="reminder_name">${name}</span>
-                    </div>
-                    <div class="reminder_column">
-                        <span>${time}</span>
-                    </div>
-                    <div class="reminder_column">
-                        <div class="ellipses"></div>
-                    </div>
-                </div>`)
-                );
-            }
+    // Convert the time string to a Date object
+    const endTime = new Date(time);
+
+    // Create a unique ID for the countdown element
+    const countdownId = 'countdown-' + Math.random().toString(36).substr(2, 9);
+
+    // Add the task HTML with the countdown element
+    node.appendChild(HTMLtoNode(`
+        <div class="reminder">
+            <div class="reminder_column">
+                <div class="${type}"></div>
+            </div>
+            <div class="reminder_column">
+                <span class="reminder_name">${name}</span>
+            </div>
+            <div class="reminder_column">
+                <p id="${countdownId}"></p>
+            </div>
+            <div class="reminder_column">
+                <div class="ellipses"></div>
+            </div>
+        </div>
+    `));
+
+    
+
+    // Function to update the countdown
+    function updateCountdown() {
+        const now = new Date();
+        const difference = endTime - now;
+
+        if (difference > 0) {
+            const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
+            const minutes = Math.floor((difference / 1000 / 60) % 60);
+            const seconds = Math.floor((difference / 1000) % 60);
+
+            document.getElementById(countdownId).innerText = `${hours}h ${minutes}m ${seconds}s`;
+        } else {
+            clearInterval(intervalId);
+            document.getElementById(countdownId).innerText = "Time's up!";
+        }
+    }
+
+    // Update the countdown every second
+    const intervalId = setInterval(updateCountdown, 1000);
+
+    // Call updateCountdown immediately to initialize
+    updateCountdown();
+}
             addTask(
                 $("#reminders_wrapper"),
                 "Drink water",
-                "00:15:20",
+                "2024-01-22T15:00:00",
                 "water"
             );
             new Chart("average-happiness-score", {
