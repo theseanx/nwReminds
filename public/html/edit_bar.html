@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Main page - PromptPal</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <style>
+            .body {
+                background-color: #ECF2FB;
+            }
+
+            .button {
+                border:none;
+                color: black;
+                padding: 15px 32px;
+                text-align:center;
+                text-decoration: none;
+                display:inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+
+            .bottomDiv {
+                align-items: flex-end;
+
+            }
+
+            .centerDiv {
+                text-align: center;
+            }
+
+            .choices-div {
+      display: flex;
+    }
+
+            .box1, .box2 {
+            flex: 1; /* Equal width for both divs */
+            padding: 20px; /* Optional: Add padding for spacing */
+        
+            }
+    
+
+            .nextButton {
+                background-color: #ECF2FB;
+                width: 200px;
+                height:50px;
+                text-align: center;
+                border-radius: 25px;
+
+            }
+
+            div.form-group {
+                margin: 30px 0;
+            }
+
+            #stretchBox {
+                height: 1000px;
+                width: 30%;
+                background-color: white;
+                border: 2px solid #333; /* Specify border width and color */
+                padding: 2%;
+
+            }
+
+
+            .checkbox input {
+                height:0;
+                width:0;
+            }
+
+            .checkbox {
+                display: block;
+                position: relative;
+                padding-left: 26px;
+                margin-bottom: 18px;
+                font-size:22px;
+                user-select:none;
+
+
+            }
+
+            .checkmark {
+                position: absolute;
+                top:0;
+                left:0;
+                height: 20px;
+                width: 20px;
+                border: 2px solid black;
+                background-color: white;
+                margin-top: 8px;
+            }
+
+            /* .checkbox .checkmark:after {
+                top: -5px;
+                width: 5px;
+                height: 10px;
+                left: 2px;
+                color: #ECF2FB;
+            } */
+
+            .checkbox input:checked ~ .checkmark{
+                background-color: #ECF2FB;
+            }
+
+          
+
+
+        </style>
+
+
+    </head>
+
+
+    <body
+        style="
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        "
+    >
+        <div
+            id="modal_form"
+            style="
+                display: none;
+                background-color: rgba(0, 0, 0, 70%);
+                position: absolute;
+                width: 100vw;
+                height: 100vh;
+            "
+        >
+            <div
+                class="mx-auto w-50 bg-white my-5 p-3"
+                style="border-radius: 30px"
+            >
+                <form action="GET" method="#">
+                    <h2
+                        style="
+                            text-align: center;
+                            font-weight: bold;
+                            font-size: 1.5rem;
+                        "
+                    >
+                        Create reminder
+                    </h2>
+                    <div class="form-group">
+                        <label for="modal_form__reason">Reason</label>
+                        <input
+                            type="text"
+                            id="modal_form__reason"
+                            class="form-control"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="modal_form__time">Time</label>
+                        <input
+                            type="time"
+                            id="modal_form__time"
+                            class="form-control"
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="modal_form__icon">Icon</label>
+                        <select
+                            name="Icon"
+                            id="modeal_form__icon"
+                            class="form-control"
+                        >
+                            <option value="water">Water</option>
+                            <option value="medication">Medication</option>
+                            <option value="snacks">Snacks</option>
+                            <option value="stretching">Stretching</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="text-align: center">
+                        <input
+                            id="modal_form__submit"
+                            type="submit"
+                            value="Create reminder"
+                            class="btn btn-primary"
+                        />
+                        <input
+                            id="modal_form__reset"
+                            type="reset"
+                            value="Cancel"
+                            class="btn btn-primary"
+                        />
+                    </div>
+                </form>
+            </div>
+        </div>
+        <header class="bg-white border-bottom border-dark p-3">
+            <h1 class="m-0" style="font-weight: bold; font-size: 1.25rem">
+                PromptPal
+            </h1>
+        </header>
+        <h2>Welcome back &gt;Username&lt;!</h2>
+        <h3>User statistics</h3>
+        <!-- Average happiness score pie chart -->
+        <!-- Monthly happiness score -->
+        <h3>Upcoming Reminders</h3>
+        <div id="reminders_wrapper">
+            <div>
+                <div><!-- <img /> --></div>
+                <span>Drink water</span>
+                <div>00:15:20</div>
+                <div><!-- actions --></div>
+            </div>
+            <div>
+                <div><!-- <img /> --></div>
+                <div>Grab a snack</div>
+                <div>01:00:02</div>
+                <div><!-- actions --></div>
+            </div>
+        </div>
+        <script>
+            const $ = document.querySelector.bind(document);
+        </script>
+
+
+
+        <div id="stretchBox">
+            <div>
+                <h2>Reminder: Stretch </h2> 
+
+                <hr style="border: 1px solid black;">
+
+                <h3>Do you feel any discomfort?</h3>
+                <div style="padding: 20px;">
+                    <form>
+                        <label class="checkbox">
+                            yes 
+                            <input type="checkbox" />
+                            <span class="checkmark"></span>
+                        </label>
+                        <label class="checkbox">
+                            no 
+                            <input type="checkbox" />
+                            <span class="checkmark"></span>
+                        </label>
+<!-- 
+                        <label for="yes">Yes</label>
+                        <input type="checkbox" id="yes" name="yes" value="yes">
+                        <label for="no">No</label>
+                        <input type="checkbox" id="no" name="no" value="no"> -->
+                    </form>
+
+                </div>
+                <br>
+                <h3>Where do you feel discomfort?</h3>
+                <div>
+                    <form>
+                        <div>
+                            <div class="choices-div"> 
+                                <div class="box1">
+                                    <label class="checkbox">
+                                        neck 
+                                        <input type="checkbox" />
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                    <label class="checkbox">
+                                        arm 
+                                        <input type="checkbox" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    
+                                    <label class="checkbox">
+                                        leg 
+                                        <input type="checkbox" />
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                </div>
+
+                                <div class="box2">
+                                    <label class="checkbox">
+                                        shoulder 
+                                        <input type="checkbox" />
+                                        <span class="checkmark"></span>
+                                    </label>
+
+                                    
+                                    <label class="checkbox">
+                                        hand 
+                                        <input type="checkbox" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    
+                                    <label class="checkbox">
+                                        back 
+                                        <input type="checkbox" />
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+
+                            
+        
+                    </form>
+
+                </div>
+                <div class="bottomDiv">
+                    <div class="centerDiv">
+                    <button  class="nextButton" type="submit">Next</button>  
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </body>
+
+</html>
