@@ -555,18 +555,24 @@
         </div>
 
         <script>
-            const nextBtn = document.getElementById("nextBtn")
-            nextBtn.addEventListener("click", () => {
-                document.getElementById("form1").style.display = "none"
-                document.getElementById("form2").style.display = "block"
+                 const nextBtn = document.getElementById("nextBtn")
+                nextBtn.addEventListener("click", () => {
+                    document.getElementById("form1").style.display = "none"
+                    document.getElementById("form2").style.display = "block"
 
-            })
-
-            const finishBtn = document.getElementById("finishBtn")
-            finishBtn.addEventListener("click", () => {
-                document.getElementById("form2").style.display = "none"
-                document.getElementById("form0").style.display = "block"
-            })
+                })
+            
+   
+                const finishBtn = document.getElementById("finishBtn")
+                finishBtn.addEventListener("click", () => {
+                    document.getElementById("form2").style.display = "none"
+                    document.getElementById("form0").style.display = "block"
+                })
+            
+                function afterInterrupt () {
+                document.getElementById("form0").style.display = "none"
+                document.getElementById("form1").style.display = "block"
+            }
 
             const reminderBtn = document.getElementById("reminderBtn")
             reminderBtn.addEventListener("click", () => {
