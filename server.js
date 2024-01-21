@@ -46,6 +46,8 @@ app.put('/db/userlist/:username/:activity', user.editActivity);
 
 app.delete('/db/userlist/:username/:activity', user.removeActivity);
 
+app.get('/db/userlist/:username/:soreArea', user.getSoreArea);
+
 // Start the server after connecting to the database
 connectToDatabase().then(() => {
   app.listen(port, () => {

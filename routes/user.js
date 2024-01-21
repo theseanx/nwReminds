@@ -215,6 +215,29 @@ const removeActivity = async (req, res) => {
     }
 };
 
+const getSoreArea = async (req, res) => {
+    try {
+        const { username, soreArea } = req.params;
+
+        // Assuming you have a database model named User
+        const user = await collection.findOne({ username });
+
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // Filter activities based on the specified sore area
+        const filteredActivities = user.activities.filter(
+            (activity) => activity.body_parts && activity.body_parts[soreArea] !== undefined
+        );
+
+        res.status(200).json({ activities: filteredActivities });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+};
+
   
   module.exports = {
     createNewUser,
