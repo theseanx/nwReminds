@@ -16,6 +16,7 @@ const port = 3000;
 const uri = 'mongodb://127.0.0.1:27017'; // Replace with your MongoDB connection string
 const client = new MongoClient(uri);
 
+<<<<<<< HEAD
 
 const publicVapidKey =
   "BJ8NBEgdl89k71YbzUGwKAYdbZF97XobHNUlNiX8xjDD5YEHkXxbv_JrC7pgkPAZkiFtdqy6EY7JKmn9NQJcitY";
@@ -52,6 +53,55 @@ app.use(express.static('public'));
 //const user = require('./routes/user.js');
 
 
+=======
+app.use((req, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1:5500');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+  });
+  
+
+
+const publicVapidKey =
+  "BJ8NBEgdl89k71YbzUGwKAYdbZF97XobHNUlNiX8xjDD5YEHkXxbv_JrC7pgkPAZkiFtdqy6EY7JKmn9NQJcitY";
+const privateVapidKey = "3AysE1150GFoHijLeC3mmJGftO0cZGROeSiTalMiSpE";
+
+webpush.setVapidDetails(
+    "mailto:test@test.com",
+    publicVapidKey,
+    privateVapidKey
+  );
+
+  
+
+  // Subscribe Route
+app.post("/subscribe", (req, res) => {
+  // Get pushSubscription object
+  const subscription = req.body;
+
+  // Send 201 - resource created
+  res.status(201).json({});
+
+  // Create payload
+  const payload = JSON.stringify({ title: "Push Test" });
+
+  // Pass object into sendNotification
+  webpush
+    .sendNotification(subscription, payload)
+    .catch(err => console.error(err));
+});
+
+app.use(express.static('public'));
+
+
+
+
+//const user = require('./routes/user.js');
+
+
+>>>>>>> main
 
 app.get('/', async (req, res) => {
     res.send('Hello, this is your website!');

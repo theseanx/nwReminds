@@ -385,14 +385,32 @@
 
                 <h3>Here are some suggestions</h3>
                 <div id="video-block">
+<<<<<<< HEAD
                
 
+=======
+                    <ul class="video-list">
+                        <li class="video-item">
+                            <h2>5 minute meditation</h2>
+                            <a href="https://www.youtube.com/watch?v=ssss7V1_eyA" target="_blank">Watch Video</a>
+                        </li>
+
+                        <li class="video-item">
+                            <h2>5 minute workout</h2>
+                            <a href="https://www.youtube.com/watch?v=tzIJfCMBBRs" target="_blank">Watch Video</a>
+                        </li>
+                    </ul>
+>>>>>>> main
                 </div>
                 <br>
                 <h3>Additional instructions</h3>
                 <div id="instruction-block">
+<<<<<<< HEAD
 
 
+=======
+                    <p>Sometimes the best solution is to rest, relax, and recharge. It's hard to be your best on empty. - Sam Glenn</p>
+>>>>>>> main
                 </div>
 
                 <br>
@@ -571,8 +589,73 @@
                 template.innerHTML = html;
                 return template.content.children[0];
             }
+<<<<<<< HEAD
             function addTask(node, name, time, type) {
     // Convert the time string to a Date object
+=======
+            function addTask(node, name, type) {
+
+                /*
+                const express = require("express");
+                const webpush = require("web-push");
+                const bodyParser = require("body-parser");
+                const path = require("path");
+                                
+                    // Convert the time string to a Date object
+
+                    const app = express();
+
+                    app.use(express.static(path.join(__dirname, "client")));
+
+                app.use(bodyParser.json());
+
+
+                app.use(express.json());
+                */
+
+    
+        const publicVapidKey =
+        "BJ8NBEgdl89k71YbzUGwKAYdbZF97XobHNUlNiX8xjDD5YEHkXxbv_JrC7pgkPAZkiFtdqy6EY7JKmn9NQJcitY";
+        const privateVapidKey = "3AysE1150GFoHijLeC3mmJGftO0cZGROeSiTalMiSpE";
+
+        /*
+webpush.setVapidDetails(
+    "mailto:test@test.com",
+    publicVapidKey,
+    privateVapidKey
+  );
+
+      // Subscribe Route
+app.post("/subscribe", (req, res) => {
+  // Get pushSubscription object
+  const subscription = req.body;
+
+  // Send 201 - resource created
+  res.status(201).json({});
+
+  // Create payload
+  const payload = JSON.stringify({ title: "Push Test" });
+
+  // Pass object into sendNotification
+  webpush
+    .sendNotification(subscription, payload)
+    .catch(err => console.error(err));
+});
+*/
+
+    var now = new Date();
+    
+
+    const startingHours= 0;
+    const startingMinutes= 0;
+    const startingSeconds = 5;
+    now.setHours(now.getHours() + startingHours);
+    now.setMinutes(now.getMinutes() + startingMinutes);
+    now.setSeconds(now.getSeconds() + startingSeconds);
+
+    let time = now.toString();
+
+>>>>>>> main
     const endTime = new Date(time);
 
     // Create a unique ID for the countdown element
@@ -589,6 +672,10 @@
             </div>
             <div class="reminder_column">
                 <p id="${countdownId}"></p>
+<<<<<<< HEAD
+=======
+                <script type="module">
+>>>>>>> main
             </div>
             <div class="reminder_column">
                 <div class="ellipses"></div>
@@ -596,6 +683,57 @@
         </div>
     `));
 
+<<<<<<< HEAD
+=======
+// Check for service worker
+if ("serviceWorker" in navigator) {
+  send().catch(err => console.error(err));
+}
+
+// Register SW, Register Push, Send Push
+async function send() {
+  // Register Service Worker
+  console.log("Registering service worker...");
+  const register = await navigator.serviceWorker.register("/worker.js", {
+    scope: "/"
+  });
+  console.log("Service Worker Registered...");
+
+  // Register Push
+  console.log("Registering Push...");
+  const subscription = await register.pushManager.subscribe({
+    userVisibleOnly: true,
+    applicationServerKey: urlBase64ToUint8Array(publicVapidKey)
+  });
+  console.log("Push Registered...");
+
+  // Send Push Notification
+  console.log("Sending Push...");
+  await fetch("http://localhost:3000/subscribe", {
+    method: "POST",
+    body: JSON.stringify(subscription),
+    headers: {
+      "content-type": "application/json"
+    }
+  });
+  console.log("Push Sent...");
+}
+
+function urlBase64ToUint8Array(base64String) {
+  const padding = "=".repeat((4 - base64String.length % 4) % 4);
+  const base64 = (base64String + padding)
+    .replace(/\-/g, "+")
+    .replace(/_/g, "/");
+
+  const rawData = window.atob(base64);
+  const outputArray = new Uint8Array(rawData.length);
+
+  for (let i = 0; i < rawData.length; ++i) {
+    outputArray[i] = rawData.charCodeAt(i);
+  }
+  return outputArray;
+}
+>>>>>>> main
     
 
     // Function to update the countdown
@@ -610,8 +748,33 @@
 
             document.getElementById(countdownId).innerText = `${hours}h ${minutes}m ${seconds}s`;
         } else {
+<<<<<<< HEAD
             clearInterval(intervalId);
             document.getElementById(countdownId).innerText = "Time's up!";
+=======
+            //clearInterval(intervalId);
+            //document.getElementById(countdownId).innerText = "Time's up!";
+
+                // Perform action when countdown reaches zero
+                console.log("Countdown reached zero! Perform some action.");
+
+                if ("serviceWorker" in navigator) {
+                    send().catch(err => console.error(err));
+                }
+
+
+                // You can add your specific action here, such as displaying a message, triggering an event, etc.
+
+                // For example, stopping the countdown and displaying a message:
+                // clearInterval(countdownInterval);
+                // countdownEl.innerHTML = 'Countdown reached zero!';
+
+                // retrieve the next interval
+                //time = startingHours * 60 * 60 + startingMinutes * 60 + startingSeconds + 1;
+                endTime.setHours(now.getHours() + startingHours);
+                endTime.setMinutes(now.getMinutes() + startingMinutes);
+                endTime.setSeconds(now.getSeconds() + startingSeconds + 2);
+>>>>>>> main
         }
     }
 
@@ -624,7 +787,10 @@
             addTask(
                 $("#reminders_wrapper"),
                 "Drink water",
+<<<<<<< HEAD
                 "2024-01-22T15:00:00",
+=======
+>>>>>>> main
                 "water"
             );
             new Chart("average-happiness-score", {
