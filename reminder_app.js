@@ -12,7 +12,13 @@ class reminderapp {
     nextNotifications;
     constructor() {
         this.reminders = [];
-        this.nextNotifications = [];
+        // A potential problem I see is if the user gets a notification while they currently have another notification open.
+        // then, it could cause a conflict.
+        // Solution could be to A: only send notifications every 5 minutes at most.
+        //                      B: not send a notification if another one is currently being active (or if the user is in "being notified" state)
+        // Making nextNotifications into a field variable (rather than a local variable) allows the while loop to run multiple times, potentially adding different notifications into the nextNotifications list each loop
+        // without losing data from the previous loop, this way notifications can be sent only every 5 minutes.
+        this.nextNotifications =[];
         runApp();
     }
 
@@ -24,7 +30,16 @@ class reminderapp {
             let curDateTime = d.getTime();
             checkIfAnyEndpointsCalled();
             this.checkReminders(curDateTime);
-            checkNotifications();
+            if (d.getMinutes() % 5 === 0) {
+                this.checkNotifications();
+            }
+
+        }
+    }
+
+    checkNotifications() {
+        if (this.nextNotifications >= 0) {
+            // TODO: notify the user
         }
     }
 
@@ -38,13 +53,12 @@ class reminderapp {
     getElapsedTime(curDateTime, i) {
         // citation: https://www.tutorialspoint.com/finding-the-time-elapsed-in-javascript
         if ((curDateTime - this.reminders[i].lastRemindedDateTime) >= this.reminders[i].interval) {
-            addToNotifyList(i);
+            this.addToNotifyList(i);
             this.reminders[i].setLastRemindedDateTime(curDateTime);
         }
     }
 
-    addToNotifyList() {
-        nextNotifications
-
+    addToNotifyList(i) {
+        this.nextNotifications.push(this.reminders[i])
     }
 }
