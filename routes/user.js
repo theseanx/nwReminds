@@ -123,7 +123,7 @@ const addActivity = async (req, res) => {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        console.log("here1");
+        // console.log(user);
 
         // Add the new activity to the user's activities array
         user.activities.push({
@@ -248,4 +248,5 @@ const getSoreArea = async (req, res) => {
     addActivity,
     editActivity,
     removeActivity,
+    getSoreArea
   }
