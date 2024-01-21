@@ -31,6 +31,9 @@
             div.form-group {
                 margin: 30px 0;
             }
+            input[type="radio"]:checked + label {
+                outline: 1px solid black;
+            }
             .water {
                 margin: auto;
                 padding: 15px;
@@ -55,6 +58,18 @@
                 background-size: 75% 75%;
                 background-position: center center;
             }
+            .rest {
+                margin: auto;
+                padding: 15px;
+                width: 75px;
+                height: 75px;
+                background-color: #f7da8f;
+                border-radius: 10px;
+                background-image: url("/public/img/mug-hot-alt.png");
+                background-repeat: no-repeat;
+                background-size: 75% 75%;
+                background-position: center center;
+            }
             .ellipses {
                 margin: auto;
                 padding: 15px;
@@ -64,11 +79,6 @@
                 background-repeat: no-repeat;
                 background-size: 75%;
                 background-position: center center;
-            }
-            div.chart_wrapper:after {
-                content: "";
-                display: block;
-                clear: both;
             }
             div.chart_container {
                 width: 47.5%;
@@ -111,10 +121,87 @@
         <header class="bg-white border-bottom border-dark p-3">
             <h1>PromptPal</h1>
         </header>
-        <div class="m-3">
+        <form
+            class="m-3"
+            style="
+                float: right;
+                width: 30%;
+                padding: 30px;
+                background-color: white;
+                border-radius: 20px;
+            "
+        >
+            <h2>Create a reminder</h2>
+            <div class="form-group">
+                <label for="action_form__name">Reminder name</label>
+                <input
+                    type="text"
+                    placeholder="Enter name"
+                    class="form-control bg-light"
+                />
+            </div>
+            <div class="form-group">
+                <label for="action_form__interval">Choose an interval</label>
+                <input
+                    type="text"
+                    placeholder="HH:MM:SS"
+                    class="form-control bg-light"
+                />
+            </div>
+            <div class="form-group">
+                <legend style="font-size: 1rem">Choose a type</legend>
+                <div
+                    class="bg-light w-100"
+                    style="border-radius: 25px; padding: 15px"
+                >
+                    <div style="width: 30%; display: inline-block">
+                        <input
+                            name="action_form__type__selector"
+                            type="radio"
+                            id="action_form__type__water"
+                            style="visibility: hidden"
+                            checked="checked"
+                        />
+                        <label for="action_form__type__water">
+                            <p class="water"></p>
+                        </label>
+                    </div>
+                    <div style="width: 30%; display: inline-block">
+                        <input
+                            name="action_form__type__selector"
+                            type="radio"
+                            id="action_form__type__stretch"
+                            style="visibility: hidden"
+                        />
+                        <label for="action_form__type__stretch">
+                            <p class="stretch"></p>
+                        </label>
+                    </div>
+                    <div style="width: 30%; display: inline-block">
+                        <input
+                            name="action_form__type__selector"
+                            type="radio"
+                            id="action_form__type__rest"
+                            style="visibility: hidden"
+                        />
+                        <label for="action_form__type__rest">
+                            <p class="rest"></p>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input
+                    type="submit"
+                    value="Set reminder!"
+                    class="form-control bg-light"
+                />
+            </div>
+        </form>
+        <div class="m-3" style="width: 65%">
             <h2>Welcome back &lt;Username&gt;!</h2>
             <h3>User statistics</h3>
-            <div class="chart_wrapper">
+            <div>
                 <div class="chart_container" style="float: left">
                     <h4>Average happiness score</h4>
                     <canvas
@@ -133,6 +220,7 @@
             <h3 style="font-size: 1.25rem">Upcoming Reminders</h3>
             <div id="reminders_wrapper"></div>
         </div>
+
         <script>
             const $ = document.querySelector.bind(document);
             function HTMLtoNode(html) {
@@ -180,10 +268,10 @@
             new Chart("monthly-happiness-score", {
                 type: "line",
                 data: {
-                    labels: ["December", "January"],
+                    labels: ["December", "January", "February"],
                     datasets: [
                         {
-                            data: [66, 68],
+                            data: [66, 68, 67],
                             backgroundColor: ["lightblue"],
                             fill: false,
                         },
