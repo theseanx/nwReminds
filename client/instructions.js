@@ -3,7 +3,7 @@ async function loadSecrets() {
 	return await response.json();
 }
 
-async function instructions(keywords) {
+export async function createChat(keywords) {
     const secrets = await loadSecrets();
     const apiKey = await secrets.apiKey;
 
@@ -21,7 +21,7 @@ async function instructions(keywords) {
             "messages": [
                 {
                     "role": "system",
-                    "content": "you represent a mindfulness assistant who recommends stretching exercises according to what problem areas they have"
+                    "content": "you represent a mindfulness assistant who recommends stretching exercises according to what problem areas they have. give a list of 5 maximum points."
                 },
                 {
                     "role": "user",
@@ -42,8 +42,6 @@ async function instructions(keywords) {
     // Update the webpage with the models
     console.log(instructions);
     updateAnswerBox(instructions.choices[0].message.content);
-
-	// TODO: Fill in the rest of the function
 }
 
 function updateAnswerBox(responseText) {
