@@ -187,6 +187,7 @@ const editActivity = async (req, res) => {
 
 
 
+
 const removeActivity = async (req, res) => {
     try {
         const { username, activity } = req.params;
