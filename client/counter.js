@@ -43,8 +43,8 @@ function updateCountdown() {
         // You can add your specific action here, such as displaying a message, triggering an event, etc.
 
         // For example, stopping the countdown and displaying a message:
-        //clearInterval(countdownInterval);
-        countdownEl.innerHTML = 'Countdown reached zero!';
+        // clearInterval(countdownInterval);
+        // countdownEl.innerHTML = 'Countdown reached zero!';
 
         // retrieve the next interval
         time = startingHours * 60 * 60 + startingMinutes * 60 + startingSeconds + 1;
