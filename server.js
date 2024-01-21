@@ -86,6 +86,7 @@ app.post('/db/userlist/:username/activity', user.addActivity);
 // this is working for single word activities only
 app.put('/db/userlist/:username/:activity', user.editActivity);
 app.delete('/db/userlist/:username/:activity', user.removeActivity);
+app.get('/db/userlist/:username', user.getAllActivities);
 
 app.get('/db/userlist/:username/:soreArea', user.getSoreArea);
 
