@@ -118,16 +118,19 @@ const addActivity = async (req, res) => {
         // Assuming you have a database model named User with an 'activities' field
         // where activities is an array of objects { name, type }
         const user = await User.findOne({ username });
-
+        console.log("here0");
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
+
+        console.log("here1");
 
         // Add the new activity to the user's activities array
         user.activities.push({
             name: activityName,
             type: activityType,
         });
+        console.log("here2");
 
         // Save the updated user to the database
         await user.save();
