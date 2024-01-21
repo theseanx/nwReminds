@@ -28,7 +28,7 @@ class reminderapp {
         let keepGoing = true;
         while (keepGoing) {
             let curDateTime = d.getTime();
-            checkIfAnyEndpointsCalled();
+            // TODO: this.checkIfAnyEndpointsCalled();
             this.checkReminders(curDateTime);
             if (d.getMinutes() % 5 === 0) {
                 this.checkNotifications();

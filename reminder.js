@@ -1,11 +1,12 @@
+const minutetomsFactor = 600000;
 class Reminder {
     name
-    interval
+    interval // in milliseconds
     lastRemindedDateTime
 
     constructor(name, interval) {
         this.name = name;
-        this.interval = interval;
+        this.interval = minutetomsFactor * interval;
         this.lastRemindedDateTime = null;
     }
 
