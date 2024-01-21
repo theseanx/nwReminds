@@ -66,6 +66,7 @@ app.get('/db/userlist/:username/feelings', user.getFeelings);
 
 // working
 app.post('/db/userlist/:username/activity', user.addActivity);
+// everything followed by the colon is a parameter, things in the json are the body
 
 // editActivity:
 // issue: some activities have multiple words, but the endpoint URL only accepts one continous word for the activity

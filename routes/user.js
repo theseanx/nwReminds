@@ -113,27 +113,27 @@ const getName = async (req, res) => {
 const addActivity = async (req, res) => {
     try {
         const { username } = req.params;
-        const { activityName, activityType } = req.body;
+        const { activityName, interval } = req.body;
 
         // Assuming you have a database model named User with an 'activities' field
         // where activities is an array of objects { name, type }
         const user = await collection.findOne({ username });
-        console.log("here0");
+
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
 
-        // console.log(user);
-
         // Add the new activity to the user's activities array
-        user.activities.push({
+        const newActivity = {
             name: activityName,
-            type: activityType,
-        });
-        console.log("here2");
+            type: interval,
+        };
 
-        // Save the updated user to the database
-        // await user.save();
+        // Use updateOne with filter and update operations
+        await collection.updateOne(
+            { username: username },
+            { $push: { activities: newActivity } }
+        );
 
         res.status(200).json({ message: 'Activity added successfully', user });
     } catch (error) {
@@ -142,13 +142,14 @@ const addActivity = async (req, res) => {
     }
 };
 
+
 // to start the server: node server.js
 
 
 const editActivity = async (req, res) => {
     try {
         const { username, activity } = req.params;
-        const { newActivityName, newInterval} = req.body;
+        const { newActivityName, newInterval } = req.body;
 
         // Assuming you have a database model named User
         const user = await collection.findOne({ username });
@@ -159,7 +160,7 @@ const editActivity = async (req, res) => {
 
         // Find the index of the activity in the user's activities array
         const activityIndex = user.activities.findIndex(
-            (act) => act.activity === activity
+            (act) => act.name === activity
         );
 
         if (activityIndex === -1) {
@@ -167,11 +168,14 @@ const editActivity = async (req, res) => {
         }
 
         // Update the activity details
-        user.activities[activityIndex].activity = newActivityName || user.activities[activityIndex].activity;
+        user.activities[activityIndex].name = newActivityName || user.activities[activityIndex].name;
         user.activities[activityIndex].interval = newInterval || user.activities[activityIndex].interval;
 
-        // Save the updated user to the database
-        // await user.save();
+        // Update the existing activity in the database
+        await collection.updateOne(
+            { username: username, 'activities.name': activity },
+            { $set: { 'activities.$.name': user.activities[activityIndex].name, 'activities.$.interval': user.activities[activityIndex].interval } }
+        );
 
         res.status(200).json({ message: 'Activity edited successfully', user });
     } catch (error) {
@@ -179,6 +183,7 @@ const editActivity = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
 
 
 
@@ -195,7 +200,7 @@ const removeActivity = async (req, res) => {
 
         // Find the index of the activity in the user's activities array
         const activityIndex = user.activities.findIndex(
-            (act) => act.activity === activity
+            (act) => act.name === activity
         );
 
         if (activityIndex === -1) {
@@ -205,8 +210,11 @@ const removeActivity = async (req, res) => {
         // Remove the activity from the user's activities array
         user.activities.splice(activityIndex, 1);
 
-        // Save the updated user to the database
-        // await user.save();
+        // Update the existing user in the database with the modified activities array
+        await collection.updateOne(
+            { username: username },
+            { $set: { activities: user.activities } }
+        );
 
         res.status(200).json({ message: 'Activity removed successfully', user });
     } catch (error) {
@@ -214,6 +222,7 @@ const removeActivity = async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 };
+
 
 const getSoreArea = async (req, res) => {
     try {
